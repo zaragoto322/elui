@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message消息提示组件</title>
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1591966_u346be35l6.css">
+    <style>
+        .Message {
+            margin: 30px auto;
+            max-width: 800px;
+            border-radius: 4px;
+            box-shadow:  0 0 4px #ccc;
+            padding: 16px;
+        }
+
+
+
+        .btn {
+            padding: 10px 16px;
+            outline: none;
+            font-weight: 500;
+            color: #303030;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            border-color: lightskyblue;
+            color: lightskyblue;
+        }
+
+        .message {
+            position: fixed;
+            left: 50%;
+            top: 30px;
+            padding: 10px 16px;
+            opacity: 0;
+            transition: all .3s;
+            transform: translate(50%, -50px);
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: #fff;
+            border-radius: 4px;
+        }
+
+        .message.show {
+            transform: translateY(10px);
+            opacity: 1;
+        }
+
+        .message.success {
+            background-color: #67C23A;
+        }
+
+        .message.warning {
+            background-color: #E6A23C;
+        }
+
+        .message.info {
+            background-color: #909399;
+        }
+
+        .message.danger {
+            background-color: #F56C6C;
+        }
+
+        .message .iconfont{
+            margin-right: 6px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="Message">
+        <h2>Message消息提示</h2>
+        <div class="container">
+            <button class="btn btn-suc">成功</button>
+            <button class="btn btn-warn">警告</button>
+            <button class="btn btn-info">消息</button>
+            <button class="btn btn-dan">错误</button>
+        </div>
+    </div>
+
+    <script>
+        class BtnClick {
+            constructor({type = 'success',text = ''}){
+                this.type = type;
+                this.text = text;
+                this.render()
+                this.bind()
+            }
+
+            render(){
+                let $div = document.createElement('div')
+                this.$message = $div
+                $div.classList.add('message')
+                $div.classList.add(this.type)
+                let $icon = document.createElement('span')
+                $icon.classList.add('iconfont')
+                $icon.classList.add('icon-' + this.type)
+                $div.appendChild($icon)
+                let $text = document.createTextNode(this.text)
+                $div.appendChild($text)
+                document.body.appendChild($div)
+                $div.style.transform = 'translateX(-50%)'
+
+            }
+
+            bind(){
+                setTimeout(() => this.show())
+                setTimeout(() => this.destory(), 3000)
+            }
+
+            show() {
+                this.$message.classList.add('show')
+            }
+
+            destory() {
+                this.$message.classList.remove('show')
+                setTimeout(() => this.$message.parentNode.removeChild(this.$message), 400)
+            }
+
+        }
+
+
+        document.querySelector('.btn-suc').onclick = function() {
+            new BtnClick({text: '消息传递成功'});
+        }
+
+        document.querySelector('.btn-warn').onclick = function() {
+            new BtnClick({type: 'warning', text: '警告：消息传递出错'});
+        }
+
+        document.querySelector('.btn-info').onclick = function() {
+            new BtnClick({type: 'info', text: '这是消息'});
+        }
+
+        document.querySelector('.btn-dan').onclick = function() {
+            new BtnClick({type: 'danger', text: '出现了错误'});
+        }
+
+
+    </script>
+</body>
+</html>
