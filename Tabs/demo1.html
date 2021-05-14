@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabs选项卡</title>
+    <style>
+        .container {
+            box-shadow: 0 0 4px 1px black;
+            border-radius: 4px;
+            max-width: 700px;
+            margin: 30px auto;
+            padding-left: 30px;
+            padding: 16px;
+        }
+
+        .tabHead {
+            display: flex;
+            border-bottom: 4px solid #ddd;
+            margin-bottom: 5px;
+            font-size: 14px;
+            line-height: 30px;
+        }
+
+        .tabHeadItem {
+            margin-right: 40px;
+            margin-bottom: -4px;
+            cursor: pointer;
+        }
+
+        .tabHeadItem .line {
+        position: absolute;
+        top: 100%;
+        transform: translateX(0);
+        width: 50px;
+        height: 2px;
+        background: #409eff;
+        transition: all .3s;
+        }
+
+        .tabHeadItem.active {
+            color: #409eff;
+            border-bottom: 4px solid #409eff;
+        }
+      
+        .tabContentItem { 
+            padding: 16px 0;
+            font-size: 14px;
+            display: none;
+        }
+
+        .tabContentItem.active { 
+            display: block;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class='container'>
+        <h1>Tab选项卡</h1>
+        <div class="tabHead">
+            <span class="tabHeadItem active">用户管理</span>
+            <span class="tabHeadItem">配置管理</span>
+            <span class="tabHeadItem">角色管理</span>
+            <span class="tabHeadItem">定时任务补偿</span>
+        </div>
+        <div class="tabContent">
+            <div class="tabContentItem active">用户管理</div>
+            <div class="tabContentItem">配置管理</div>
+            <div class="tabContentItem">角色管理</div>
+            <div class="tabContentItem">定时任务补偿</div>
+        </div>
+    </div>
+    <script>
+        const $ = s => document.querySelector(s)
+        const $$ = s => document.querySelectorAll(s)
+        
+        $$('.tabHeadItem').forEach($item => {
+            $item.onclick = function() {
+                $$('.tabHeadItem').forEach($item => $item.classList.remove('active'))
+                this.classList.add('active')
+
+                let index = [...$$('.tabHeadItem')].indexOf(this)
+                $$('.tabContentItem').forEach($item => $item.classList.remove('active'))
+                $$('.tabContentItem')[index].classList.add('active')
+            }
+        })
+       
+    </script>
+</body>
+</html>
